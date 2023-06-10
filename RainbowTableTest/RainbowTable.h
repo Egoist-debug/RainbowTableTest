@@ -13,7 +13,6 @@ public:
 	void SaveTable();
 	std::string Hash(std::string password);
 	std::string Reduce(std::string hash, int salt);
-	static int fileNum;
 	void SetHash(std::string hash);
 	void SetPasswordLength(int passwordLength);
 private:
@@ -46,6 +45,6 @@ private:
 	std::string mTableFileName;
 	RainbowTable mRainbowTable;
 	std::map<std::string, std::string> mTable;
-	std::string Find(std::string str);
+	void Find(std::string str, std::vector<std::string>& passwords);
 	void Crack(std::string str, int index, std::vector<std::pair<int, std::string>>& result);
 };

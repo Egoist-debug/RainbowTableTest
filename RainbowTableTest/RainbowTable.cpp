@@ -11,7 +11,6 @@
 #include <openssl/evp.h>
 #include "RainbowTable.h"
 
-int RainbowTable::fileNum = 0;
 
 RainbowTable::RainbowTable(size_t size, int chainLength, int passwordLength, std::string hash)
 	: mSize(size), mChainLength(chainLength), mPasswordLength(passwordLength), mHash(hash)
@@ -129,7 +128,6 @@ void RainbowTable::SaveTable()
 	// 将内存中的彩虹表清空
 	mTable.clear();
 	mPasswords.clear();
-	fileNum++;
 	
 }
 
@@ -167,7 +165,7 @@ void RainbowTableCrack::Crack()
 {
 	std::string hash = mHash;
 	std::vector<std::pair<int, std::string>> result;
-	Crack(hash, mChainLength, result);
+	Crack(hash, mChainLength - 1, result);
 	if (result.size() != 0)
 	{
 		std::vector<std::pair<int, std::string>>::iterator it;
@@ -213,8 +211,8 @@ void RainbowTableCrack::Crack(std::string hash, int index, std::vector<std::pair
 	{
 		return;
 	}
+	std::vector<std::string> passwords;
 	std::string reduced = "";
-	std::string password = "";
 	std::string hash1 = "";
 	hash1 = hash;
 	for (int i = index; i < mChainLength; i++)
@@ -222,28 +220,27 @@ void RainbowTableCrack::Crack(std::string hash, int index, std::vector<std::pair
 		reduced = mRainbowTable.Reduce(hash1, i);
 		hash1 = mRainbowTable.Hash(reduced);
 	}
-	password = Find(reduced);
-	if (password != "")
+	Find(reduced, passwords);
+	if (passwords.size() != 0)
 	{
-		result.push_back(std::pair<int, std::string>(index, password));
-		Crack(hash, index - 1, result);
+		std::vector<std::string>::iterator it;
+		for (it = passwords.begin(); it != passwords.end(); it++)
+		{
+			result.push_back(std::pair<int, std::string>(index, *it));
+		}
 	}
-	else
-	{
-		Crack(hash, index - 1, result);
-	}
+	Crack(hash, index - 1, result);
 }
 
-// 查找彩虹表中链的终点
-std::string RainbowTableCrack::Find(std::string str) 
+void RainbowTableCrack::Find(std::string str, std::vector<std::string>& passwords)
 {
 	std::map<std::string, std::string>::iterator it;
 	for (it = mTable.begin(); it != mTable.end(); it++)
 	{
 		if (it->second == str)
 		{
-			return it->first;
+			passwords.push_back(it->first);
 		}
 	}
-	return "";
+	return;
 }
