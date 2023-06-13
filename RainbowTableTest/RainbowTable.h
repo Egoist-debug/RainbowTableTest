@@ -19,7 +19,7 @@ private:
 	size_t mSize;
 	int mChainLength;
 	int mPasswordLength;
-	const std::string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+	const std::string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	std::string mHash;
 	std::map<std::string, std::string> mTable;
 	std::set<std::string> mPasswords;

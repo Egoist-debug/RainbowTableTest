@@ -40,8 +40,6 @@ std::string RainbowTable::Hash(std::string password)
 		sprintf(buf, "%02x", md[i]);
 		hash += buf;
 	}
-	// 输出hash值
-	//std::cout << hash << std::endl;
 	return hash;
 }
 
@@ -70,7 +68,6 @@ void RainbowTable::SetPasswordLength(int passwordLength)
 
 void RainbowTable::GenerateRandomPasswords()
 {
-	// 生成随机密码，包含大小写字母和数字,密码长度为mPasswordLength
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(0, chars.length() - 1);
@@ -116,7 +113,8 @@ void RainbowTable::CreateTable()
 // 将生成的彩虹表保存到文件中，如果文件已存在则覆盖
 void RainbowTable::SaveTable()
 {
-	std::string filename = "table_"+ std::to_string(mSize) + "_" + mHash + "_"+ std::to_string(mPasswordLength) + "_" + std::to_string(mChainLength) + ".txt";
+	std::string filename = "table_"+ std::to_string(mSize) + "_" + mHash + "_"+ 
+		std::to_string(mPasswordLength) + "_" + std::to_string(mChainLength) + ".txt";
 	std::ofstream file;
 	file.open(filename);
 	std::map<std::string, std::string>::iterator it;
@@ -125,7 +123,6 @@ void RainbowTable::SaveTable()
 		file << it->first << " " << it->second << std::endl;
 	}
 	file.close();
-	// 将内存中的彩虹表清空
 	mTable.clear();
 	mPasswords.clear();
 	

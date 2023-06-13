@@ -27,4 +27,23 @@
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="table_100000_md5_5_60.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="table_10000_md5_5_30.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="table_10000_sha1_5_60.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CodeMap1.dgml">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="ClassDiagram.cd">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
 </Project>
